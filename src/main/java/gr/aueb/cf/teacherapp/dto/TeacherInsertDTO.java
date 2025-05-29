@@ -3,7 +3,15 @@ package gr.aueb.cf.teacherapp.dto;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Pattern;
 import jakarta.validation.constraints.Size;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
+@NoArgsConstructor
+@Getter
+@Setter
+@AllArgsConstructor
 public class TeacherInsertDTO {
 
     @NotNull(message = "Firstname must not be empty")
