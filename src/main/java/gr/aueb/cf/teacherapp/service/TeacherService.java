@@ -18,19 +18,19 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 @Service
-@RequiredArgsConstructor // for DI with final fields
+//@RequiredArgsConstructor // for DI with final fields
 public class TeacherService implements ITeacherService {
 
     private final TeacherRepository teacherRepository;
     private final RegionRepository regionRepository;
     private final Mapper mapper;
 
-//    @Autowired // for DI
-//    public TeacherService(TeacherRepository teacherRepository, RegionRepository regionRepository, Mapper mapper) {
-//        this.teacherRepository = teacherRepository;
-//        this.regionRepository = regionRepository;
-//        this.mapper = mapper;
-//    }
+    @Autowired // for DI
+    public TeacherService(TeacherRepository teacherRepository, RegionRepository regionRepository, Mapper mapper) {
+        this.teacherRepository = teacherRepository;
+        this.regionRepository = regionRepository;
+        this.mapper = mapper;
+    }
 
     @Override
     @Transactional(rollbackOn = Exception.class)
@@ -52,7 +52,6 @@ public class TeacherService implements ITeacherService {
     }
 
     @Override
-    @Transa
     public Page<TeacherReadOnlyDTO> getPaginatedTeachers(int page, int size) {
 
         Pageable pageable = PageRequest.of(page, size);
