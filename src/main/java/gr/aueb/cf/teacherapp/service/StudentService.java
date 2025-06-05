@@ -13,6 +13,8 @@ import gr.aueb.cf.teacherapp.repository.StudentRepository;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -42,11 +44,20 @@ public class StudentService implements IStudentService {
 
     @Override
     public Student getStudentById(Long id) throws EntityInvalidArgumentException, EntityNotFoundException {
-        return null;
+
+        if (id == null || id <= 0) {
+            throw new EntityInvalidArgumentException("Student", "Invalid student ID");
+        }
+
+        return studentRepository.findById(id)
+                .orElseThrow(() -> new EntityNotFoundException("Student", "Student with ID " + id + " not found"));
     }
 
     @Override
     public Page<StudentReadOnlyDTO> getPaginatedStudents(int page, int size) {
-        return null;
+
+        Pageable pageable = PageRequest.of(page, size);
+        Page<Student> studentPage = studentRepository.findAll(pageable);
+        return studentPage.map(mapper::mapToStudentReadOnlyDTO);
     }
 }
