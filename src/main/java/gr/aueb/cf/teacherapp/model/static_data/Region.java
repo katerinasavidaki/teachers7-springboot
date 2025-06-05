@@ -1,5 +1,6 @@
 package gr.aueb.cf.teacherapp.model.static_data;
 
+import gr.aueb.cf.teacherapp.model.Student;
 import gr.aueb.cf.teacherapp.model.Teacher;
 import jakarta.persistence.*;
 import lombok.*;
@@ -36,5 +37,20 @@ public class Region {
         if (teachers == null) teachers = new HashSet<>();
         teachers.add(teacher);
         teacher.setRegion(this);
+    }
+
+    @Getter(AccessLevel.PRIVATE)
+    @OneToMany(mappedBy = "region")
+    private Set<Student> students = new HashSet<>();
+
+    public Set<Student> getAllStudents() {
+        if (students == null) students = new HashSet<>();
+        return Collections.unmodifiableSet(students);
+    }
+
+    public void addStudent(Student student) {
+        if (students == null) students = new HashSet<>();
+        students.add(student);
+        student.setRegion(this);
     }
 }
